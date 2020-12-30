@@ -16,9 +16,9 @@ from .models import LINEAR_AE, LSTM_AE, CONV_LSTM_AE
 
 def instantiate_model(model, train_set, encoding_dim, **kwargs):
     # TODO: train_set is a list of tensors, not a tensor
-    if isinstance(model, (LINEAR_AE, LSTM_AE)):
+    if any((model, LINEAR_AE, LSTM_AE)):
         return model(train_set.shape[-1], encoding_dim, **kwargs)
-    elif isinstance(model, CONV_LSTM_AE):
+    elif model is CONV_LSTM_AE:
         # TODO: Handle in_channels != 1
         if len(train_set.shape) == 4: # 2D elements
             return model(train_set.shape[-2:], encoding_dim, )
